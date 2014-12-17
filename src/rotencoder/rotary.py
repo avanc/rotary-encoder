@@ -11,7 +11,7 @@ RIGHT=1
 
 
 # Based on  http://lxr.free-electrons.com/source/drivers/input/misc/rotary_encoder.c
-class RotaryEncoder():
+class RotaryEncoder(object):
     def __init__(self, gpio_a, gpio_b, gpio_p):
         self.gpio_a=gpio_a
         self.gpio_b=gpio_b
@@ -26,6 +26,14 @@ class RotaryEncoder():
         GPIO.setup(gpio_b, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(gpio_b, GPIO.BOTH)
         GPIO.add_event_callback(gpio_b, self.callback_rotary)
+
+
+        GPIO.setup(gpio_p, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(gpio_p, GPIO.BOTH)
+        GPIO.add_event_callback(gpio_p, self.callback_push)
+
+
+
 
     def callback_rotary(self, channel):
         state = self.get_state()
